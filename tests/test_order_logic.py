@@ -46,9 +46,9 @@ class TestOrderLogic(unittest.TestCase):
         order.set_status("Done")
         self.assertEqual(order.status, "Done")
 
-    def test_order_initial_status_none(self):
+    def test_order_initial_status(self):
         order = Order()
-        self.assertIsNone(order.status)
+        self.assertEqual(order.status, "New")
 
     def test_observer_notification_text_output(self):
         order = Order()
