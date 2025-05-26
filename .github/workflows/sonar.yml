@@ -35,7 +35,6 @@ jobs:
 
       - name: ❌ Fail if coverage < 80%
         run: |
-          pip install bc  # for bc on some containers
           cov=$(coverage report | grep TOTAL | awk '{print $4}' | sed 's/%//')
           echo "Current coverage: $cov%"
           if (( $(echo "$cov < 80" | bc -l) )); then
@@ -48,11 +47,11 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: 📊 Generate HTML report
+      - name: 📊 Generate HTML coverage report
         run: coverage html
 
       - name: 🗂 Upload HTML report to GitHub
-        uses: actions/upload-artifact@v3.1.3
+        uses: actions/upload-artifact@v3
         with:
           name: html-report
           path: htmlcov/
