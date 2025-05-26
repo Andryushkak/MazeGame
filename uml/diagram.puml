@@ -1,0 +1,55 @@
+
+@startuml
+class Coffee {
+  +get_description()
+  +cost()
+}
+
+class Espresso
+class Latte
+class Cappuccino
+
+Espresso -|> Coffee
+Latte -|> Coffee
+Cappuccino -|> Coffee
+
+class IngredientDecorator {
+  -coffee: Coffee
+  +get_description()
+  +cost()
+}
+
+class Milk
+class Chocolate
+class Syrup
+
+Milk -|> IngredientDecorator
+Chocolate -|> IngredientDecorator
+Syrup -|> IngredientDecorator
+IngredientDecorator --> Coffee
+
+class CoffeeFactory {
+  +create_coffee(type_name)
+}
+
+class Order {
+  -status
+  -observers
+  +add_observer()
+  +remove_observer()
+  +set_status()
+  +notify_observers()
+}
+
+class OrderObserver {
+  +update(status)
+}
+
+class Customer {
+  +update(status)
+}
+
+Customer -|> OrderObserver
+Order --> OrderObserver
+
+@enduml
