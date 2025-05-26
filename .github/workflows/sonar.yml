@@ -1,19 +1,57 @@
-name: Build
+name: Build & Analyze
+
 on:
   push:
     branches:
       - master
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
   sonarqube:
     name: SonarQube
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarQube Scan
+          fetch-depth: 0
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install -r requirements.txt || true
+          pip install coverage
+
+      - name: 🧪 Run tests and generate coverage report
+        run: |
+          coverage run -m unittest discover tests
+          coverage xml
+
+      - name: ❌ Fail if coverage < 80%
+        run: |
+          cov=$(coverage report | grep TOTAL | awk '{print $4}' | sed 's/%//')
+          echo "Current coverage: $cov%"
+          if (( $(echo "$cov < 80" | bc -l) )); then
+            echo "::error ::Test coverage ($cov%) is below threshold (80%)"
+            exit 1
+          fi
+
+      - name: ☁️ SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: 📊 Upload HTML report
+        run: coverage html
+
+      - name: 🗂 Upload HTML report to GitHub
+        uses: actions/upload-artifact@v3
+        with:
+          name: html-report
+          path: htmlcov/
