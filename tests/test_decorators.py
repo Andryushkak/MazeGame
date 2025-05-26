@@ -27,3 +27,7 @@ class TestDecorators(unittest.TestCase):
         coffee = Milk(Milk(coffee))
         self.assertEqual(coffee.get_description().count("Milk"), 2)
         self.assertAlmostEqual(coffee.cost(), 2.0 + 0.3 + 0.3)
+
+def test_chocolate_cost(self):
+    coffee = Chocolate(self.factory.create_coffee("Espresso"))
+    self.assertAlmostEqual(coffee.cost(), 1.5 + 0.4)
