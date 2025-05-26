@@ -46,12 +46,3 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-      - name: 📊 Generate HTML coverage report
-        run: coverage html
-
-      - name: 🗂 Upload HTML report to GitHub
-        uses: actions/upload-artifact@v3
-        with:
-          name: html-report
-          path: htmlcov/
