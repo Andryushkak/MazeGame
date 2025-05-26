@@ -28,4 +28,4 @@ class Syrup(IngredientDecorator):
         return self.coffee.get_description() + ", Syrup"
 
     def cost(self):
-        return self.coffee.cost() + 0.4
+        return self.coffee.cost() + 0.5
