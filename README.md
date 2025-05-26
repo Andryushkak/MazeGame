@@ -24,4 +24,4 @@ coverage xml
 ```bash
 sonar-scanner
 ```
-оооо
+ооо
