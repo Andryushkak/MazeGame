@@ -1,28 +1,26 @@
-# Coffee Order App (PyQt)
-Цей проєкт демонструє використання шаблонів проектування (Factory Method, Decorator, Observer) на прикладі додатку замовлення кави з графічним інтерфейсом PyQt5.
 
-## Використані шаблони проектування:
-- **Factory Method**: створення кави різного типу.
-- **Decorator**: додавання інгредієнтів (молоко, шоколад тощо).
-- **Observer**: система оновлення статусів замовлення.
+# ☕ Coffee Order App
 
-## Інструкція
-1. Встановіть залежності:
+## Features
+- PyQt GUI
+- 🇺🇦/🇺🇸 Multilingual
+- Inventory and cost tracking
+- Reports and CSV export
+- SonarCloud integration
+
+## Run
 ```bash
-pip install -r requirements.txt
-```
-
-2. Запустіть додаток:
-```bash
+pip install PyQt5 coverage
 python main.py
 ```
 
-3. Для аналізу з SonarQube:
+## Test & Coverage
 ```bash
-sonar-scanner
+coverage run -m unittest discover
+coverage xml
 ```
 
-## Тестування
+## Analyze
 ```bash
-python -m unittest discover tests
+sonar-scanner
 ```
