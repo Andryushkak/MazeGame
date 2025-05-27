@@ -1,11 +1,12 @@
-
 @startuml
 
+' === Клас базової кави ===
 class Coffee {
   +get_description()
   +cost()
 }
 
+' === Конкретні напої ===
 class Espresso
 class Latte
 class Cappuccino
@@ -14,6 +15,7 @@ Espresso -|> Coffee
 Latte -|> Coffee
 Cappuccino -|> Coffee
 
+' === Декоратори ===
 class IngredientDecorator {
   -coffee: Coffee
   +get_description()
@@ -29,9 +31,15 @@ Chocolate -|> IngredientDecorator
 Syrup -|> IngredientDecorator
 IngredientDecorator --> Coffee
 
+
 class CoffeeFactory {
   +create_coffee(type_name)
 }
+
+CoffeeFactory ..> Espresso : creates
+CoffeeFactory ..> Latte : creates
+CoffeeFactory ..> Cappuccino : creates
+
 
 class Order {
   -status

@@ -1,0 +1,24 @@
+@startuml behavior
+
+actor User
+
+participant "CoffeeFactory" as Factory
+participant "Cappuccino" as Cappuccino
+participant "Milk" as Milk
+participant "Syrup" as Syrup
+participant "Order" as Order
+participant "Customer" as Customer
+
+User -> Factory : create_coffee("Cappuccino")
+Factory -> Cappuccino : return new Cappuccino
+
+User -> Milk : wrap(Cappuccino)
+Milk -> Syrup : wrap(Milk(Cappuccino))
+
+User -> Order : create new Order
+Order -> Order : add_observer(Customer)
+
+User -> Order : set_status("Ready")
+Order -> Customer : update("Ready")
+
+@enduml
